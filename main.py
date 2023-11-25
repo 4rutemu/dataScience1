@@ -3,19 +3,19 @@ import numpy as np
 np.random.seed(57)
 
 
-class ArtificialBee:
+class ArtificialBeeColony:
     def __init__(
-            self,
-            func,
-            colony_size,
-            employed_ratio,
-            onlooker_ratio,
-            scout_ratio,
-            dim,
-            li,
-            ui,
-            max_cycles,
-            abandonment_limit,
+        self,
+        func,
+        colony_size,
+        employed_ratio,
+        onlooker_ratio,
+        scout_ratio,
+        dim,
+        li,
+        ui,
+        max_cycles,
+        abandonment_limit,
     ):
         """
         [limit] используется для отслеживания количества последовательных циклов,
@@ -78,7 +78,7 @@ class ArtificialBee:
             neighbour_index = np.random.randint(0, self.colony_size)
             phi = np.random.uniform(-1, 1)
             neighbour_bee = employed_bee + phi * (
-                    employed_bee - self.population[neighbour_index, :]
+                employed_bee - self.population[neighbour_index, :]
             )
             neighbour_bee_fitness = self.calculate_fitness(neighbour_bee)
             if neighbour_bee_fitness < self.calculate_fitness(employed_bee):
@@ -116,7 +116,7 @@ class ArtificialBee:
             phi = np.random.uniform(-1, 1)
             neighbour_index = np.random.randint(0, self.colony_size)
             neighbour_bee = onlooker_bee + phi * (
-                    onlooker_bee - self.population[neighbour_index, :]
+                onlooker_bee - self.population[neighbour_index, :]
             )
             neighbour_bee_fitness = self.calculate_fitness(neighbour_bee)
 
@@ -136,7 +136,7 @@ class ArtificialBee:
         for i in range(self.colony_size):
             if self.limit[i] >= self.abandonment_limit:
                 self.population[i, :] = self.li + np.random.rand(self.dim) * (
-                        self.ui - self.li
+                    self.ui - self.li
                 )
                 self.limit[i] = 0
             else:
@@ -171,20 +171,19 @@ def rastrigin_function(x, A=10):
     """
     Глобальный минимум в нулевой точке x=(0,0,…,0) с минимальным значением f(x)=0
     """
-    return A * len(x) + np.sum(x ** 2 - A * np.cos(2 * np.pi * x))
+    return A * len(x) + np.sum(x**2 - A * np.cos(2 * np.pi * x))
 
 
-if __name__ == "__main__":
-    abc = ArtificialBee(
-        func=rastrigin_function,
-        colony_size=20,
-        employed_ratio=0.5,
-        onlooker_ratio=0.5,
-        scout_ratio=0.2,
-        dim=1,
-        li=-600,
-        ui=600,
-        max_cycles=15,
-        abandonment_limit=4,
-    )
-    abc.run()
+abc = ArtificialBeeColony(
+    func=rastrigin_function,
+    colony_size=20,
+    employed_ratio=0.5,
+    onlooker_ratio=0.5,
+    scout_ratio=0.2,
+    dim=1,
+    li=-600,
+    ui=600,
+    max_cycles=15,
+    abandonment_limit=4,
+)
+abc.run()
