@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     print("\n2.LogisticRegression with selected features")
     drop_columns = [
-        "BloodPressure",
+        "Pregnancies",
         "SkinThickness",
         "Age",
     ]
